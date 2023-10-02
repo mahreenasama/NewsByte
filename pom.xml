@@ -9,8 +9,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>newsbytes-be</module>
-		<module>newsbytes-fe</module>
+		<module>newsbyte-be</module>
+		<module>newsbyte-fe</module>
 	</modules>
 
 

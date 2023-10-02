@@ -1,0 +1,239 @@
+databaseChangeLog:
+  - changeSet:
+      id: data-0.0.4
+      author: news team
+      changes:
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'Dawn'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://www.dawn.com/_img/logo.png'
+              - column:
+                  name: site_url
+                  value: 'https://www.dawn.com/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://www.dawn.com/latest-news'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: '92 News'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://92newshd.tv/static/gui/images/92news-logo.webp'
+              - column:
+                  name: site_url
+                  value: 'https://92newshd.tv/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://92newshd.tv/latest-news'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'The News International'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://www.thenews.com.pk/assets/front/images/Thenews-logo.svg'
+              - column:
+                  name: site_url
+                  value: 'https://www.thenews.com.pk/'
+              - column:
+                  name: url_to_scrap
+                  value: 'http://feeds.feedburner.com/com/Yeor'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'The Express Tribune'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://i.tribune.com.pk/media/images/logos/tribune-logo.webp'
+              - column:
+                  name: site_url
+                  value: 'https://tribune.com.pk/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://tribune.com.pk/feed/home'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'The Nation'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://www.nation.com.pk/uploads/theme/logo-1550475639.png'
+              - column:
+                  name: site_url
+                  value: 'https://www.nation.com.pk/'
+              - column:
+                  name: url_to_scrap
+                  value: 'view-source:https://www.nation.com.pk/rss/top-stories'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'Daily Pakistan'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://en.dailypakistan.com.pk/uploads/theme/logo-1572259858.png'
+              - column:
+                  name: site_url
+                  value: 'https://en.dailypakistan.com.pk/'
+              - column:
+                  name: url_to_scrap
+                  value: 'view-source:https://en.dailypakistan.com.pk/rss/top-news'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'Ary News'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://arynews.tv/wp-content/uploads/2021/07/ARY-News.png'
+              - column:
+                  name: site_url
+                  value: 'https://arynews.tv/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://arynews.tv/feed/'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'Pakistan Observer'
+              - column:
+                  name: type
+                  value: national
+              - column:
+                  name: logo_url
+                  value: 'https://pakobserver.net/wp-content/uploads/2023/06/PO-Logo-Dark.png'
+              - column:
+                  name: site_url
+                  value: 'https://pakobserver.net/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://pakobserver.net/top-news/feed/'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'BBC News'
+              - column:
+                  name: type
+                  value: international
+              - column:
+                  name: logo_url
+                  value: 'https://news.bbcimg.co.uk/nol/shared/img/bbc_news_120x60.gif'
+              - column:
+                  name: site_url
+                  value: 'https://www.bbc.com/news'
+              - column:
+                  name: url_to_scrap
+                  value: 'view-source:http://feeds.bbci.co.uk/news/rss.xml'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'The New York Times'
+              - column:
+                  name: type
+                  value: international
+              - column:
+                  name: logo_url
+                  value: 'https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png'
+              - column:
+                  name: site_url
+                  value: 'https://www.nytimes.com/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'The Guardian'
+              - column:
+                  name: type
+                  value: international
+              - column:
+                  name: logo_url
+                  value: 'https://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png'
+              - column:
+                  name: site_url
+                  value: 'https://www.theguardian.com'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://www.theguardian.com/international/rss'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'Al Jazeera'
+              - column:
+                  name: type
+                  value: international
+              - column:
+                  name: logo_url
+                  value: 'https://www.aljazeera.com/images/logo_aje.png'
+              - column:
+                  name: site_url
+                  value: 'https://www.aljazeera.com/'
+              - column:
+                  name: url_to_scrap
+                  value: 'https://www.aljazeera.com/xml/rss/all.xml'
+        - insert:
+            tableName: newspapers
+            columns:
+              - column:
+                  name: name
+                  value: 'CNN'
+              - column:
+                  name: type
+                  value: international
+              - column:
+                  name: logo_url
+                  value: 'http://i2.cdn.turner.com/cnn/2015/images/09/24/cnn.digital.png'
+              - column:
+                  name: site_url
+                  value: 'https://edition.cnn.com/'
+              - column:
+                  name: url_to_scrap
+                  value: 'http://rss.cnn.com/rss/cnn_topstories.rss'
