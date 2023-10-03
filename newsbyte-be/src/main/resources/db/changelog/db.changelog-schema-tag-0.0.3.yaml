@@ -20,7 +20,10 @@ databaseChangeLog:
               - column:
                   name: description
                   type: varchar(255)
+              - column:
+                  name: status
+                  type: varchar(10)
         - addPrimaryKey:
             tableName: tags
-            columnNames: id
+            columnNames: name
             constraintName: tags_pk

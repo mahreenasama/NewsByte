@@ -27,13 +27,14 @@ public class TagService {
 
     public Tag createTag(Tag tag)
     {
+        tag.setStatus("enabled");
         if (tagRepository.existsById(tag.getId())) {
             return null;
         }
         return tagRepository.save(tag);    //create tag
     }
 
-    public Tag updateTagById(Long id, Tag updatedTagData){
+    public Tag updateTagById(Long id, Tag updatedTagData) {
         Optional<Tag> oldTagData = tagRepository.findById(id);
         if(oldTagData.isPresent()){
             Tag updatedTag = oldTagData.get();
@@ -43,12 +44,15 @@ public class TagService {
         }
         return null;
     }
-    public void deleteTagById(Long id)
+    public Tag disableTagById(Long id)
     {
-        if(!tagRepository.existsById(id)){
-            throw new NoSuchElementException();             //handling this in global handler class
+        Optional<Tag> oldTagData = tagRepository.findById(id);
+        if(oldTagData.isPresent()) {
+            Tag updatedTag = oldTagData.get();
+            updatedTag.setStatus("disabled");
+            return tagRepository.save(updatedTag);
         }
-        tagRepository.deleteById(id);
+        return null;
     }
     public Tag getTagByName(String name){
         return tagRepository.findByName(name);

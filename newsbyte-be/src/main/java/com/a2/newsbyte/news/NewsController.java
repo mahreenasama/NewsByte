@@ -18,7 +18,7 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-   /* @GetMapping("/latest")
+    /*@GetMapping("/latest")
     public ResponseEntity<Map<String, List<News>>> getLatestNews() {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.getLatestNews()));
     }*/

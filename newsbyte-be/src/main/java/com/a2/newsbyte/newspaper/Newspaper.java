@@ -11,8 +11,8 @@ import java.util.List;
 @Entity(name = "newspapers")
 public class Newspaper {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private String type;        //localOrInternational
     @Column(name = "logo_url")
@@ -21,6 +21,7 @@ public class Newspaper {
     private String siteUrl;
     @Column(name = "url_to_scrap")
     private String urlToScrap;
+    private String status;
     @JsonIgnore
     @OneToMany(mappedBy = "newspaper", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<News> news;
@@ -33,6 +34,7 @@ public class Newspaper {
         this.logoUrl=newspaper.logoUrl;
         this.siteUrl=newspaper.siteUrl;
         this.urlToScrap = newspaper.urlToScrap;
+        this.status = newspaper.status;
         this.news=newspaper.news;
     }
     public Long getId() {
@@ -81,6 +83,14 @@ public class Newspaper {
 
     public void setUrlToScrap(String urlToScrap) {
         this.urlToScrap = urlToScrap;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<News> getNews() {

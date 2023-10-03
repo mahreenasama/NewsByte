@@ -12,10 +12,11 @@ import java.util.List;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private String description;
+    private String status;
     @JsonIgnore
     @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
     private List<News> news;
@@ -26,6 +27,7 @@ public class Tag {
         this.id=tag.id;
         this.name=tag.name;
         this.description=tag.description;
+        this.status=tag.status;
         this.news=tag.news;
     }
 
@@ -52,6 +54,13 @@ public class Tag {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<News> getNews() {

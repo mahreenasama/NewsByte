@@ -21,7 +21,6 @@ public class News {
     private String detailsUrl;              //source of news (i.e, link to redirect)
     @Column(name = "added_on")
     private String addedOn;             //date in which this news added in database
-
     @ManyToOne
     @JoinColumn(name = "tag_id")
     //@JsonProperty(value = "tag", required = false)

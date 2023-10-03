@@ -21,6 +21,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://www.dawn.com/latest-news'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -39,6 +42,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://92newshd.tv/latest-news'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -57,6 +63,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://www.thenews.com.pk/rss/1/10'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -75,6 +84,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://tribune.com.pk/feed/home'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -93,6 +105,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://www.nation.com.pk/rss/top-stories'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -111,6 +126,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://en.dailypakistan.com.pk/rss/top-news'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -129,6 +147,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://arynews.tv/feed/'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -147,6 +168,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://pakobserver.net/top-news/feed/'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -165,6 +189,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'http://feeds.bbci.co.uk/news/rss.xml'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -183,6 +210,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -201,6 +231,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://www.theguardian.com/international/rss'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -219,6 +252,9 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'https://www.aljazeera.com/xml/rss/all.xml'
+              - column:
+                  name: status
+                  value: enabled
         - insert:
             tableName: newspapers
             columns:
@@ -237,3 +273,6 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   value: 'http://rss.cnn.com/rss/cnn_topstories.rss'
+              - column:
+                  name: status
+                  value: enabled

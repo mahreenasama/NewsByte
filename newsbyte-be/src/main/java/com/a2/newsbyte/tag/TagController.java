@@ -18,9 +18,11 @@ public class TagController {
 
     @GetMapping
     public ResponseEntity<Map<String, List<Tag>>> getAllTags() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tags", tagService.getAllTags()));
-
+        List<Tag> tags = tagService.getAllTags();
+        if (tags == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tags", tags));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
@@ -41,23 +43,19 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("content", createdTag));
     }
 
-
     @PreAuthorize("hasAuthority('EDITOR')")
     @PostMapping("/{id}")
     public ResponseEntity<Map<String, Tag>> updateTagById(@PathVariable("id") Long id, @RequestBody Tag updatedTagData)
     {
-        Tag updatedTag = tagService.updateTagById(id, updatedTagData);
-        if (updatedTag != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", updatedTag));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.updateTagById(id, updatedTagData)));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTagById(@PathVariable("id") Long id)
     {
-        tagService.deleteTagById(id);
+        tagService.disableTagById(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
 }

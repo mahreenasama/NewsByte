@@ -29,11 +29,10 @@ databaseChangeLog:
               - column:
                   name: url_to_scrap
                   type: varchar(255)
+              - column:
+                  name: status
+                  type: varchar(10)
         - addPrimaryKey:
             tableName: newspapers
-            columnNames: id
-            constraintName: newspapers_pk
-        - addUniqueConstraint:
-            tableName: newspapers
             columnNames: name
-            constraintName: newspapers_uk_01
+            constraintName: newspapers_pk
