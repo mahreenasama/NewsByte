@@ -31,7 +31,7 @@ Al Jazeera: (https://www.aljazeera.com/xml/rss/all.xml)
 	publishedAt: <pubDate> html
 	ImageSrc: NOT AVAILABLE HERE
 
-BBC News: (view-source:http://feeds.bbci.co.uk/news/rss.xml)
+BBC News: (http://feeds.bbci.co.uk/news/rss.xml)
 <Item>:
 	title: <title>html
 	description : <description>html
@@ -39,7 +39,7 @@ BBC News: (view-source:http://feeds.bbci.co.uk/news/rss.xml)
 	publishedAt: <pubDate> html
 	ImageSrc: NOT AVAILABLE HERE
 ------------------------------------------------------------------------------ PAKISTANI NEWS ------------------------------
-The Nation News: (view-source:https://www.nation.com.pk/rss/top-stories)
+The Nation News: (https://www.nation.com.pk/rss/top-stories)
 <Item>:
 	title: <title>html
 	description : <description>html
@@ -59,7 +59,7 @@ The Express Tribune: (https://tribune.com.pk/feed/home)
 </image>
 
 
-The News International: (http://feeds.feedburner.com/com/Yeor)
+The News International: (https://www.thenews.com.pk/rss/1/10)
 <Item>:
 	title: <title>html
 	description : <description>html (description k andr pehlay <image> k tag hy, usko nikal kar
@@ -72,7 +72,7 @@ The News International: (http://feeds.feedburner.com/com/Yeor)
 </description>
 
 
-Daily Pakistan: (view-source:https://en.dailypakistan.com.pk/rss/top-news)
+Daily Pakistan: (https://en.dailypakistan.com.pk/rss/top-news)
 <Item>:
 	title: <title>html
 	description : <description>html 

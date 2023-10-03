@@ -56,7 +56,7 @@ databaseChangeLog:
                   value: 'https://www.thenews.com.pk/'
               - column:
                   name: url_to_scrap
-                  value: 'http://feeds.feedburner.com/com/Yeor'
+                  value: 'https://www.thenews.com.pk/rss/1/10'
         - insert:
             tableName: newspapers
             columns:
@@ -92,7 +92,7 @@ databaseChangeLog:
                   value: 'https://www.nation.com.pk/'
               - column:
                   name: url_to_scrap
-                  value: 'view-source:https://www.nation.com.pk/rss/top-stories'
+                  value: 'https://www.nation.com.pk/rss/top-stories'
         - insert:
             tableName: newspapers
             columns:
@@ -110,7 +110,7 @@ databaseChangeLog:
                   value: 'https://en.dailypakistan.com.pk/'
               - column:
                   name: url_to_scrap
-                  value: 'view-source:https://en.dailypakistan.com.pk/rss/top-news'
+                  value: 'https://en.dailypakistan.com.pk/rss/top-news'
         - insert:
             tableName: newspapers
             columns:
@@ -164,7 +164,7 @@ databaseChangeLog:
                   value: 'https://www.bbc.com/news'
               - column:
                   name: url_to_scrap
-                  value: 'view-source:http://feeds.bbci.co.uk/news/rss.xml'
+                  value: 'http://feeds.bbci.co.uk/news/rss.xml'
         - insert:
             tableName: newspapers
             columns:

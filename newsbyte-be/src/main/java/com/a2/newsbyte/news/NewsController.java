@@ -26,7 +26,6 @@ public class NewsController {
     @PreAuthorize("hasAuthority('EDITOR')")
     @GetMapping
     public ResponseEntity<Map<String, List<News>>> getAllNews(@RequestParam(name = "newspaper") String newspaper) throws IOException {
-        newsService.fetchNewsByRssFeedUrl("http://rss.cnn.com/rss/cnn_topstories.rss");     //now only bcc remaining from international, but still there is issue in CNN, check again
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.getAllNews(newspaper)));
     }
 

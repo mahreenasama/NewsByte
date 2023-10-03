@@ -64,17 +64,24 @@ public class NewsService {
         List<News> news = new ArrayList<>();
 
         List<Newspaper> newspapers = newspaperService.getAllNewspapers();
+        System.out.println("totla papers: "+newspapers.size());
+
         for (Newspaper newspaper: newspapers) {
+            System.out.println("paper: "+newspaper.getName());
+
             if(newspaper.getName().equals("Dawn")) {
                 news.addAll(this.fetchDawnNews(newspaper.getUrlToScrap()));
             }
             else if(newspaper.getName().equals("92 News")) {
-                news.addAll(this.fetchDawnNews(newspaper.getUrlToScrap()));
+                news.addAll(this.fetchNews92(newspaper.getUrlToScrap()));
+                System.out.println("came in 92: ");
             }
             else {
                 news.addAll(this.fetchNewsByRssFeedUrl(newspaper.getUrlToScrap()));
+                System.out.println("cam ein else: ");
             }
         }
+        System.out.println("totla newssss: "+news.size());
         return news;
     }
 
@@ -124,7 +131,7 @@ public class NewsService {
                     break;
                 }
             }
-            newsList.add(new News(title, description, publishedAt, imgSrc, detailsUrl, LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
+            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
         }
         return newsList;
     }
@@ -173,7 +180,7 @@ public class NewsService {
                     break;
                 }
             }
-            newsList.add(new News(title, description, publishedAt, imgSrc, detailsUrl, LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
+            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
         }
         return newsList;
     }
@@ -187,60 +194,54 @@ public class NewsService {
         try {
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(url));
-            /*System.out.println("feed:::: " + feed);
-            System.out.println("feed getAuthor:::: " + feed.getAuthor());
-            System.out.println("feed getDescription:::: " + feed.getDescription());
-            System.out.println("feed getCopyright:::: " + feed.getCopyright());
-            System.out.println("feed getFeedType:::: " + feed.getFeedType());
-            System.out.println("feed getDocs:::: " + feed.getDocs());
-            System.out.println("feed getEncoding:::: " + feed.getEncoding());
-            System.out.println("feed getGenerator:::: " + feed.getGenerator());
-            System.out.println("feed getLanguage:::: " + feed.getLanguage());
-            System.out.println("feed getLink:::: " + feed.getLink());
-            System.out.println("feed getStyleSheet:::: " + feed.getStyleSheet());*/
 
             List<SyndEntry> entries = feed.getEntries();
-
             for (SyndEntry entry : entries) {
                 System.out.println("---------------------------------------");
-
-                System.out.println("entry___:: "+entry);
-
                 String title = entry.getTitle();
                 String detailsUrl = entry.getLink();
-                String imgSrc = null;
                 String description = null;
+                String imgSrc = null;
                 String publishedAt = null;
 
-                // --------------------------------------------- setting image
-                List<org.jdom2.Element> foreignMarkup = entry.getForeignMarkup();
-                // Loop through foreignMarkup to find media:content element
-                for (org.jdom2.Element content : foreignMarkup) {
-                    if (content.getName().equals("content")) {
-                        imgSrc = content.getAttributeValue("url");
-                        System.out.println("Image URLLLL: " + imgSrc);
-                    }
-                }
-                if(imgSrc == null) {
-                    System.out.println("image src was null");
-                    imgSrc = newspaper.getLogoUrl();
-                }
-
-                // --------------------------------------------- setting description
+                // --------------------------------------------- setting description -----------------------------------
                 if(entry.getDescription() != null) {
                     description = entry.getDescription().getValue();
                     if(description.contains("<")) {
-                        System.out.println("desc was diff");
-                        description = title;
+                        Document doc = Jsoup.parse(description);
+                        if(description.contains("img")) {
+                            imgSrc = doc.selectFirst("img").attr("src").toString();
+                            description = doc.selectFirst("body").text();
+                        }
+                        else{
+                            description = title;
+                        }
                     }
                 }
-                else{
+                else {
                     System.out.println("desc was null");
                     description = title;
                 }
 
-                // --------------------------------------------- setting pubDate
-                if(entry.getPublishedDate() != null){
+                // --------------------------------------------- setting image -----------------------------------------
+                List<org.jdom2.Element> foreignMarkup = entry.getForeignMarkup();
+                for (org.jdom2.Element content : foreignMarkup) {
+                    if (content.getName().equals("content")) {
+                        imgSrc = content.getAttributeValue("url");          // <media:content rul="img-url" />
+                    }
+                    else if (content.getName().equals("group")) {
+                        imgSrc = content.getChildren().get(0).getAttributeValue("url"); // <media:group> <media:content url="img-url" /> <media:group>
+                    }
+                    else if (content.getName().equals("thumbnail")) {
+                        imgSrc = content.getAttributeValue("url");
+                    }
+                }
+                if(imgSrc == null) {
+                    imgSrc = newspaper.getLogoUrl();
+                }
+
+                // --------------------------------------------- setting pubDate ---------------------------------------
+                if(entry.getPublishedDate() != null) {
                     publishedAt = entry.getPublishedDate().toString();
                 }
                 else{
@@ -248,15 +249,25 @@ public class NewsService {
                     publishedAt = LocalDateTime.now().toString();
                 }
 
+                /*System.out.println("--------------------------------------");
                 System.out.println("imgSrc: " + imgSrc);
                 System.out.println("Title: " + title);
                 System.out.println("detailsUrl: " + detailsUrl);
                 System.out.println("Description: " + description);
                 System.out.println("publishedAt: " + publishedAt);
+                System.out.println("------------------------------------");*/
 
+                // check if this news is already in database
+                News latestNews = newsRepository.getLatestNewsByNewspaperId(newspaper.getId());
+                if(latestNews != null) {
+                    if (latestNews.getDetailsUrl().equals(detailsUrl)) {
+                        break;
+                    }
+                }
+                newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
             }
-
             return newsList;
+
         } catch (IOException | FeedException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.io.IOException;
+
 @EnableAsync
 @EnableScheduling
 @Configuration
@@ -18,9 +20,9 @@ public class ScheduleConfiguration {
 
     @Async
     @Scheduled( fixedDelay = 300000)
-    public void scrappNews() {
+    public void scrappNews() throws IOException {
         System.out.println("run after every 5 minutes");            // 1 sec = 1000 ms, 5 min = 60 x 5 = 300 sec, 300 sec = 300000 ms
-        //newsService.runScrapper();
+        newsService.runScrapper();
     }
 
 }
