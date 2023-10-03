@@ -1,6 +1,7 @@
 package com.a2.newsbyte.tag;
 
 
+import com.a2.newsbyte.newspaper.Newspaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,18 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("tags", tags));
     }
 
+    @GetMapping("/enabled")
+    public ResponseEntity<Map<String, List<Tag>>> getEnabledTags() {
+        List<Tag> tags = tagService.getEnabledTags();
+        if (tags == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("newspapers", tags));
+    }
+
     @PreAuthorize("hasAuthority('EDITOR')")
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Tag>> getTagById(@PathVariable("id") Long id)
+    public ResponseEntity<Map<String, Tag>> getTagById(@PathVariable("id") String id)
     {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.getTagById(id)));
     }
@@ -45,14 +55,14 @@ public class TagController {
 
     @PreAuthorize("hasAuthority('EDITOR')")
     @PostMapping("/{id}")
-    public ResponseEntity<Map<String, Tag>> updateTagById(@PathVariable("id") Long id, @RequestBody Tag updatedTagData)
+    public ResponseEntity<Map<String, Tag>> updateTagById(@PathVariable("id") String id, @RequestBody Tag updatedTagData)
     {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.updateTagById(id, updatedTagData)));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteTagById(@PathVariable("id") Long id)
+    public ResponseEntity<HttpStatus> deleteTagById(@PathVariable("id") String id)
     {
         tagService.disableTagById(id);
         return ResponseEntity.status(HttpStatus.OK).build();

@@ -38,9 +38,9 @@ public class NewspaperController {
 
     @PreAuthorize("hasAuthority('EDITOR')")
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Newspaper>> getNewspaperById(@PathVariable("id") Long id)
+    public ResponseEntity<Map<String, Newspaper>> getNewspaperById(@PathVariable("name") String name)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("newspaper", newspaperService.getNewspaperById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("newspaper", newspaperService.getNewspaperById(name)));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
@@ -65,7 +65,7 @@ public class NewspaperController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteNewspaperById(@PathVariable("id") Long id)
     {
-        newspaperService.deleteNewspaperById(id);
+        newspaperService.disableNewspaperById(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

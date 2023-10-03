@@ -47,7 +47,6 @@ public class WebSecurityConfiguration{
     private String[] ignored = { "/error", "/ui/**", "/favicon.ico", "/swagger-ui/**", "/v3/api-docs",
             "/v3/api-docs/**" };
 
-    //---new---
     @Value("${spring.web.security.session.cookie.name:JWTOKEN}")
     private String jwToken = "JWTOKEN";
 
@@ -62,14 +61,12 @@ public class WebSecurityConfiguration{
     private final JwtDecoder jwtDecoder;
 
 
-
     public WebSecurityConfiguration(UserService userService) {
         this.userService = userService;
         SecretKeySpec secretKeySpec = new SecretKeySpec(Base64.getDecoder().decode(secretKey), "RSA");
         this.jwtEncoder = new NimbusJwtEncoder(new ImmutableSecret<>(secretKeySpec));
         this.jwtDecoder = NimbusJwtDecoder.withSecretKey(secretKeySpec).build();
     }
-    //---new---
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -83,9 +80,8 @@ public class WebSecurityConfiguration{
                     new AntPathRequestMatcher("/swagger-ui/**", "GET"),
                     new AntPathRequestMatcher("/swagger-ui/**", "POST"),
                     new AntPathRequestMatcher("/swagger-ui/**", "DELETE"),
-                    new AntPathRequestMatcher("/api/v1/news", "GET"),
-                    new AntPathRequestMatcher("/api/v1/news/local", "GET"),
-                    new AntPathRequestMatcher("/api/v1/tags", "GET")
+                    new AntPathRequestMatcher("/news/latest", "GET"),
+                    new AntPathRequestMatcher("/tags/enabled", "GET")
             );
         };
     }
@@ -127,7 +123,6 @@ public class WebSecurityConfiguration{
         Cookie cookie = new Cookie(jwToken, token);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
-        //cookie.setPath("/");                      //don't enable this (as we have already set cookie path above), otherwise cookie will not delete
         return cookie;
     }
 

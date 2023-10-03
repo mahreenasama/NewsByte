@@ -12,8 +12,6 @@ import java.util.List;
 public class Tag {
 
     @Id
-    private Long id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private String description;
     private String status;
@@ -24,20 +22,10 @@ public class Tag {
 
     public Tag(){}
     public Tag(Tag tag) {
-        this.id=tag.id;
         this.name=tag.name;
         this.description=tag.description;
         this.status=tag.status;
         this.news=tag.news;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -10,23 +10,15 @@ import java.util.List;
 
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
-    News getNewsById(Long id);
-
-    News getNewsByDetailsUrl(String detailsUrl);
-
-    List<News> getNewsByTagId(Long tagId);
 
     List<News> getNewsByNewspaperId(Long newspaperId);
-
-
 
     @Query(value="select * from news where id = (select max(id) from news where newspaper_id = ?)", nativeQuery = true)
     News getLatestNewsByNewspaperId(Long id);
 
-    @Modifying
+    /*@Modifying
     @Transactional
     @Query(value = "DELETE FROM news WHERE added_on != ?", nativeQuery = true)
-    void deletePrevDatesNews(String todaysDate);
-
+    void deletePrevDatesNews(String todaysDate);*/
 
 }

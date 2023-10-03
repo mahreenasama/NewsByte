@@ -40,8 +40,9 @@ public class NewsService {
     private NewspaperService newspaperService;
 
 
+    // controller functions
     public List<News> getAllNews(String newspaper) {
-        return newsRepository.getNewsByNewspaperId(newspaperService.getNewspaperByName(newspaper).getId());
+        return newsRepository.getNewsByNewspaperId(newspaperService.getNewspaperByName(newspaper).getName());
     }
 
     public News assignTagById(Long id, Tag tag) {
@@ -150,13 +151,6 @@ public class NewsService {
             String detailsUrl = "https://92newshd.tv" + item.select(".post_link").attr("href");
             String description = title;
             String publishedAt = item.select(".published_time").html();
-            /*System.out.println("-------------------92--------------------");
-            System.out.println("imgSrc: " + imgSrc);
-            System.out.println("Title: " + title);
-            System.out.println("detailsUrl: " + detailsUrl);
-            System.out.println("Description: " + description);
-            System.out.println("publishedAt: " + publishedAt);
-            System.out.println("-------------------92--------------------");*/
 
             if (imgSrc.equals("") || imgSrc.equals(null) || imgSrc.equals("null")) {
                 imgSrc = newspaper.getLogoUrl();
@@ -185,7 +179,6 @@ public class NewsService {
         return newsList;
     }
 
-
     public List<News> fetchNewsByRssFeedUrl(String urlToScrap) throws MalformedURLException {
         Newspaper newspaper = newspaperService.getNewspaperByScrappingUrl(urlToScrap);
 
@@ -197,7 +190,6 @@ public class NewsService {
 
             List<SyndEntry> entries = feed.getEntries();
             for (SyndEntry entry : entries) {
-                System.out.println("---------------------------------------");
                 String title = entry.getTitle();
                 String detailsUrl = entry.getLink();
                 String description = null;
@@ -219,7 +211,6 @@ public class NewsService {
                     }
                 }
                 else {
-                    System.out.println("desc was null");
                     description = title;
                 }
 
@@ -245,17 +236,8 @@ public class NewsService {
                     publishedAt = entry.getPublishedDate().toString();
                 }
                 else{
-                    System.out.println("pub at was null");
                     publishedAt = LocalDateTime.now().toString();
                 }
-
-                /*System.out.println("--------------------------------------");
-                System.out.println("imgSrc: " + imgSrc);
-                System.out.println("Title: " + title);
-                System.out.println("detailsUrl: " + detailsUrl);
-                System.out.println("Description: " + description);
-                System.out.println("publishedAt: " + publishedAt);
-                System.out.println("------------------------------------");*/
 
                 // check if this news is already in database
                 News latestNews = newsRepository.getLatestNewsByNewspaperId(newspaper.getId());
@@ -271,7 +253,6 @@ public class NewsService {
         } catch (IOException | FeedException e) {
             e.printStackTrace();
         }
-
 
         return newsList;
     }

@@ -11,8 +11,6 @@ import java.util.List;
 @Entity(name = "newspapers")
 public class Newspaper {
     @Id
-    private Long id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private String type;        //localOrInternational
     @Column(name = "logo_url")
@@ -28,7 +26,6 @@ public class Newspaper {
 
     public Newspaper(){}
     public Newspaper(Newspaper newspaper) {
-        this.id=newspaper.id;
         this.name=newspaper.name;
         this.type=newspaper.type;
         this.logoUrl=newspaper.logoUrl;
@@ -37,14 +34,6 @@ public class Newspaper {
         this.status = newspaper.status;
         this.news=newspaper.news;
     }
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
