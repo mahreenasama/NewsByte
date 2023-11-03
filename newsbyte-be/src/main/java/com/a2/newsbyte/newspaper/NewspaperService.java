@@ -24,21 +24,17 @@ public class NewspaperService {
         return newspaperRepository.findByStatus("enabled");
     }
 
-    public Newspaper getNewspaperById(Long id){
-        return newspaperRepository.findById(id).orElse(null);
-    }
-
     public Newspaper createNewspaper(Newspaper newspaper)
     {
         newspaper.setStatus("enabled");
-        if (newspaperRepository.existsById(newspaper.getId())) {
+        if (newspaperRepository.existsById(newspaper.getName())) {
             return null;
         }
         return newspaperRepository.save(newspaper);
     }
 
-    public Newspaper updateNewspaperById(Long id, Newspaper updatedNewspaperData) {
-        Optional<Newspaper> oldNewspaperData = newspaperRepository.findById(id);
+    public Newspaper updateNewspaperByName(String name, Newspaper updatedNewspaperData) {
+        Optional<Newspaper> oldNewspaperData = newspaperRepository.findById(name);
         if(oldNewspaperData.isPresent()){
             Newspaper updatedNewspaper = oldNewspaperData.get();
             updatedNewspaper.setName(updatedNewspaperData.getName());
@@ -51,9 +47,9 @@ public class NewspaperService {
         return null;
     }
 
-    public void disableNewspaperById(Long id)
+    public void disableNewspaperByName(String name)
     {
-        Optional<Newspaper> oldNewspaperData = newspaperRepository.findById(id);
+        Optional<Newspaper> oldNewspaperData = newspaperRepository.findById(name);
         if(oldNewspaperData.isPresent()) {
             Newspaper updatedNewspaper = oldNewspaperData.get();
             updatedNewspaper.setStatus("disabled");
@@ -70,5 +66,8 @@ public class NewspaperService {
         return newspaperRepository.findById(name).orElse(null);
     }
 
+    public List<Newspaper> getNewspapersByType(String type) {
+        return newspaperRepository.findByType(type);
+    }
 
 }

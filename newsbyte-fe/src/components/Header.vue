@@ -13,25 +13,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item me-3">
-                    <a class="nav-link active" href="/pakistan">Local</a>
+                    <button class="btn btn-dark" >National</button>
                 </li>
                 <li class="nav-item me-3">
-                    <a class="nav-link active" href="/world">World</a>
+                    <button class="btn btn-dark" >International</button>
                 </li>
-                <li class="nav-item me-3">
-                                    <a class="nav-link active" href="/about">Other</a>
-                                </li>
             </ul>
             <div class="d-flex">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item me-3" v-for="tag in tags" :key="tag.id">
-                                <a class="nav-link active" :href="'/' + tag.name">{{ tag.name }}</a>
+                                <button class="btn btn-dark">{{ tag.name }}</button>
                             </li>
                         </ul>
             </div>
         </div>
     </div>
 </nav>
+
 </template>
 
 <script>
@@ -43,6 +41,7 @@ export default {
   data() {
     return {
       tags: [],
+      news: [],
     };
   },
    mounted() {
@@ -52,13 +51,23 @@ export default {
   methods: {
    async fetchTagOptions() {
              try {
-               const response = await axios.get('/newsbyte/api/v1/tags');
+               const response = await axios.get('/newsbyte/tags?filter=enabled');
                this.tags = response.data.tags.slice(1);
 
              } catch (error) {
                console.error('Error fetching tag options:', error);
              }
            },
+
+           async fetchNewsByFilter(filterType, filterName) {
+                        try {
+                          const response = await axios.get('/newsbyte/news?filterType='+filterType+'&filterName='+filterName);
+                          this.news = response.data.news;
+
+                        } catch (error) {
+                          console.error('Error fetching news:', error);
+                        }
+                      },
 
   },
 };

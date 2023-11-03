@@ -12,7 +12,7 @@ import java.util.List;
 public class Newspaper {
     @Id
     private String name;
-    private String type;        //localOrInternational
+    private String type;        //nationalOrInternational
     @Column(name = "logo_url")
     private String logoUrl;
     @Column(name = "site_url")

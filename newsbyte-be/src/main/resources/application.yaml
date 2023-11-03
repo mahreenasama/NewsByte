@@ -19,7 +19,7 @@ spring:
 #      enabled: ${newsbyte.h2.console:false}
 
 server:
-  port: 9081
+  port: 9999
   servlet:
     context-path: /newsbyte
 

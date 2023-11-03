@@ -80,8 +80,8 @@ public class WebSecurityConfiguration{
                     new AntPathRequestMatcher("/swagger-ui/**", "GET"),
                     new AntPathRequestMatcher("/swagger-ui/**", "POST"),
                     new AntPathRequestMatcher("/swagger-ui/**", "DELETE"),
-                    new AntPathRequestMatcher("/news/latest", "GET"),
-                    new AntPathRequestMatcher("/tags/enabled", "GET")
+                    new AntPathRequestMatcher("/news", "GET"),
+                    new AntPathRequestMatcher("/tags", "GET")
             );
         };
     }

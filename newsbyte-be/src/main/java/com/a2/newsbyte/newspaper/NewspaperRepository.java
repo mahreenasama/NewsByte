@@ -8,6 +8,7 @@ import java.util.List;
 @Repository
 public interface NewspaperRepository extends JpaRepository<Newspaper, String> {
     List<Newspaper> findByStatus(String status);
+    List<Newspaper> findByType(String type);
     Newspaper findByUrlToScrap(String urlToScrap);
 
 }

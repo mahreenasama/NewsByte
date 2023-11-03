@@ -1,5 +1,6 @@
 package com.a2.newsbyte.tag;
 
+import com.a2.newsbyte.news.News;
 import com.a2.newsbyte.newspaper.Newspaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,20 +15,16 @@ public class TagService {
     private TagRepository tagRepository;
 
     // controller functions
-    public List<Tag> getAllTags()
+    public List<Tag> getAllTags(String filter)
     {
         List<Tag> tags = new ArrayList<Tag>();
-        tagRepository.findAllByOrderById().forEach(Tag -> tags.add(Tag));
-        return tags;
-    }
-
-    public List<Tag> getEnabledTags() {
-        return tagRepository.findByStatus("enabled");
-    }
-
-    public Tag getTagById(String name)
-    {
-        return tagRepository.findById(name).orElse(null);
+        if(filter.equals("all")){
+            return tagRepository.findAll();
+        }
+        else if(filter.equals("enabled")){
+            return tagRepository.findByStatus("enabled");
+        }
+        return null;
     }
 
     public Tag createTag(Tag tag)
@@ -39,25 +36,26 @@ public class TagService {
         return tagRepository.save(tag);    //create tag
     }
 
-    public Tag updateTagById(String name, Tag updatedTagData) {
+    public Tag updateTag(String name, String action, Tag updatedTagData) {
         Optional<Tag> oldTagData = tagRepository.findById(name);
         if(oldTagData.isPresent()){
-            Tag updatedTag = oldTagData.get();
-            updatedTag.setName(updatedTagData.getName());
-            updatedTag.setDescription(updatedTagData.getDescription());
-            return tagRepository.save(updatedTag);
+            if(action.equals("update")) {
+                //first make tag of those news null which belong to this tag
+                tagRepository.makeReleventNewsTagNull(name);
+
+                tagRepository.updateTagByName(updatedTagData.getName(), updatedTagData.getDescription(), name);
+
+                tagRepository.assignReleventNewsUpdatedTag(updatedTagData.getName());
+
+                return tagRepository.findById(updatedTagData.getName()).orElse(null);
+            }
+            else if(action.equals("enable") || action.equals("disable")){
+                Tag updatedTag = oldTagData.get();
+                updatedTag.setStatus(action+"d");
+                return tagRepository.save(updatedTag);
+            }
         }
         return null;
-    }
-
-    public void disableTagById(String name)
-    {
-        Optional<Tag> oldTagData = tagRepository.findById(name);
-        if(oldTagData.isPresent()) {
-            Tag updatedTag = oldTagData.get();
-            updatedTag.setStatus("disabled");
-            tagRepository.save(updatedTag);
-        }
     }
 
     // other functions

@@ -11,10 +11,12 @@ import java.util.List;
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-    List<News> getNewsByNewspaperId(Long newspaperId);
+    List<News> getNewsByNewspaperName(String newspaperName);
 
-    @Query(value="select * from news where id = (select max(id) from news where newspaper_id = ?)", nativeQuery = true)
-    News getLatestNewsByNewspaperId(Long id);
+    List<News> getNewsByTagName(String tagName);
+
+    @Query(value="select * from news where id = (select max(id) from news where newspaper_name = ?)", nativeQuery = true)
+    News getLatestNewsByNewspaperName(String name);
 
     /*@Modifying
     @Transactional

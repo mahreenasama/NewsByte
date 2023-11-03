@@ -23,14 +23,13 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.getLatestNews()));
     }*/
 
-    @PreAuthorize("hasAuthority('EDITOR')")
     @GetMapping
-    public ResponseEntity<Map<String, List<News>>> getAllNews(@RequestParam(name = "newspaper") String newspaper) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.getAllNews(newspaper)));
+    public ResponseEntity<Map<String, List<News>>> getAllNews(@RequestParam(name = "filterType") String filterType, @RequestParam(name = "filterName") String filterName) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.getAllNewsByFilter(filterType, filterName)));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
-    @PostMapping("/assign-tag/{id}")
+    @PutMapping("/assign-tag/{id}")
     public ResponseEntity<Map<String, News>> assignTagById(@PathVariable("id") Long id, @RequestBody Tag tag)
     {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("news", newsService.assignTagById(id, tag)));

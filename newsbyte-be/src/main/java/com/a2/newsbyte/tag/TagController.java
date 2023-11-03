@@ -18,28 +18,19 @@ public class TagController {
     private TagService tagService;
 
     @GetMapping
-    public ResponseEntity<Map<String, List<Tag>>> getAllTags() {
-        List<Tag> tags = tagService.getAllTags();
+    public ResponseEntity<Map<String, List<Tag>>> getAllTags(@RequestParam(name = "filter") String filter) {
+        List<Tag> tags = tagService.getAllTags(filter);
         if (tags == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("tags", tags));
     }
 
-    @GetMapping("/enabled")
-    public ResponseEntity<Map<String, List<Tag>>> getEnabledTags() {
-        List<Tag> tags = tagService.getEnabledTags();
-        if (tags == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("newspapers", tags));
-    }
-
     @PreAuthorize("hasAuthority('EDITOR')")
-    @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Tag>> getTagById(@PathVariable("id") String id)
+    @GetMapping("/{name}")
+    public ResponseEntity<Map<String, Tag>> getTag(@PathVariable("name") String name)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.getTagById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.getTagByName(name)));
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
@@ -54,18 +45,11 @@ public class TagController {
     }
 
     @PreAuthorize("hasAuthority('EDITOR')")
-    @PostMapping("/{id}")
-    public ResponseEntity<Map<String, Tag>> updateTagById(@PathVariable("id") String id, @RequestBody Tag updatedTagData)
+    @PutMapping("/{name}")
+    public ResponseEntity<Map<String, Tag>> updateTag(@PathVariable("name") String name, @RequestParam(name = "action") String action, @RequestBody Tag updatedTagData)
     {
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.updateTagById(id, updatedTagData)));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("tag", tagService.updateTag(name, action, updatedTagData)));
     }
 
-    @PreAuthorize("hasAuthority('EDITOR')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteTagById(@PathVariable("id") String id)
-    {
-        tagService.disableTagById(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
 
 }

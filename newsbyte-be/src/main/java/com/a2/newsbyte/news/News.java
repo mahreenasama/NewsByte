@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 @Entity(name = "news")
 public class News {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
@@ -16,18 +17,17 @@ public class News {
     private String publishedAt;         //date time
     @Column(name = "image_source")
     private String imageSource;         //imageSrc url
-    @Id
     @Column(name = "details_url")
     private String detailsUrl;              //source of news (i.e, link to redirect)
     @Column(name = "added_on")
     private String addedOn;             //date in which this news added in database
     @ManyToOne
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_name")
     //@JsonProperty(value = "tag", required = false)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Tag tag;
     @ManyToOne
-    @JoinColumn(name = "newspaper_id")
+    @JoinColumn(name = "newspaper_name")
     private Newspaper newspaper;
 
 

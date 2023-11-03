@@ -31,8 +31,6 @@ import java.util.Optional;
 public class NewsService {
 
     @Autowired
-    private RestTemplate restTemplate;
-    @Autowired
     private NewsRepository newsRepository;
     @Autowired
     private TagService tagService;
@@ -41,8 +39,24 @@ public class NewsService {
 
 
     // controller functions
-    public List<News> getAllNews(String newspaper) {
-        return newsRepository.getNewsByNewspaperId(newspaperService.getNewspaperByName(newspaper).getName());
+    public List<News> getAllNewsByFilter(String filterType, String filterName) {
+        if(filterType.equals("region")){
+            List<Newspaper> newspapers = newspaperService.getNewspapersByType(filterName);
+            List<News> newsList = new ArrayList<>();
+            for (Newspaper newspaper: newspapers) {
+                newsList.addAll(newsRepository.getNewsByNewspaperName(newspaper.getName()));
+            }
+            return newsList;
+        }
+        else if(filterType.equals("tag")){
+            return newsRepository.getNewsByTagName(tagService.getTagByName(filterName).getName());
+        }
+        else if(filterType.equals("newspaper")){
+            return newsRepository.getNewsByNewspaperName(newspaperService.getNewspaperByName(filterName).getName());
+        }
+        else{
+            return null;
+        }
     }
 
     public News assignTagById(Long id, Tag tag) {
@@ -88,8 +102,8 @@ public class NewsService {
 
     public void saveNewsInDatabase(List<News> newsList) {
         // saving in reverse to save earlier news first and latest news later in database
-        for(int i=newsList.size()-1; i>=0; i--) {
-            newsRepository.save(newsList.get(i));
+        for(News news: newsList) {
+            newsRepository.save(news);
         }
     }
 
@@ -125,14 +139,14 @@ public class NewsService {
                 publishedAt = LocalDateTime.now().toString();
             }
             // check if this news is already in database
-            News latestNews = newsRepository.getLatestNewsByNewspaperId(newspaper.getId());
+            News latestNews = newsRepository.getLatestNewsByNewspaperName(newspaper.getName());
 
             if(latestNews != null) {
                 if (latestNews.getDetailsUrl().equals(detailsUrl)) {
                     break;
                 }
             }
-            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
+            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagByName("General"), newspaper));
         }
         return newsList;
     }
@@ -168,13 +182,13 @@ public class NewsService {
                 publishedAt = LocalDateTime.now().toString();
             }
             // check if this news is already in database
-            News latestNews = newsRepository.getLatestNewsByNewspaperId(newspaper.getId());
+            News latestNews = newsRepository.getLatestNewsByNewspaperName(newspaper.getName());
             if(latestNews != null) {
                 if (latestNews.getDetailsUrl().equals(detailsUrl)) {
                     break;
                 }
             }
-            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
+            newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagByName("General"), newspaper));
         }
         return newsList;
     }
@@ -240,13 +254,13 @@ public class NewsService {
                 }
 
                 // check if this news is already in database
-                News latestNews = newsRepository.getLatestNewsByNewspaperId(newspaper.getId());
+                News latestNews = newsRepository.getLatestNewsByNewspaperName(newspaper.getName());
                 if(latestNews != null) {
                     if (latestNews.getDetailsUrl().equals(detailsUrl)) {
                         break;
                     }
                 }
-                newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagById(1L), newspaper));
+                newsList.add(new News(title.trim(), description.trim(), publishedAt.trim(), imgSrc.trim(), detailsUrl.trim(), LocalDate.now().toString(), tagService.getTagByName("General"), newspaper));
             }
             return newsList;
 

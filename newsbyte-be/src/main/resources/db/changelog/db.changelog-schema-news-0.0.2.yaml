@@ -37,36 +37,36 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: tag_id
-                  type: bigint
+                  name: tag_name
+                  type: varchar(50)
               - column:
-                  name: newspaper_id
-                  type: bigint
+                  name: newspaper_name
+                  type: varchar(50)
         - addPrimaryKey:
             tableName: news
-            columnNames: details_url
+            columnNames: id
             constraintName: news_pk
         - addForeignKeyConstraint:
             baseTableName: news
-            baseColumnNames: tag_id
+            baseColumnNames: tag_name
             referencedTableName: tags
-            referencedColumnNames: id
+            referencedColumnNames: name
             constraintName: fk_news_tags
         - addForeignKeyConstraint:
             baseTableName: news
-            baseColumnNames: newspaper_id
+            baseColumnNames: newspaper_name
             referencedTableName: newspapers
-            referencedColumnNames: id
+            referencedColumnNames: name
             constraintName: fk_news_newspapers
         - createIndex:
             tableName: news
             indexName: news_ix_01
             columns:
               - column:
-                  name: tag_id
+                  name: tag_name
         - createIndex:
             tableName: news
             indexName: news_ix_02
             columns:
               - column:
-                  name: newspaper_id
+                  name: newspaper_name
