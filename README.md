@@ -1,2 +1,2 @@
 # NewsByte
-A newspaper scrapping web application using spring boot (at backend) and vue js (at frontend)
+A newspaper scrapping web application using Java Spring Boot (backend) and Vue.js (frontend)
