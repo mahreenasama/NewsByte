@@ -2,6 +2,7 @@
 A newspaper scrapping web application using Java Spring Boot (backend) and Vue.js (frontend)
 
 <div text-align="center">
+  <img src = "![news_byte-1](https://github.com/user-attachments/assets/c7834461-37d9-4ea9-a52e-bffa5a81d076)" />
 ![news_byte-1](https://github.com/user-attachments/assets/c7834461-37d9-4ea9-a52e-bffa5a81d076)
 </div>
 
